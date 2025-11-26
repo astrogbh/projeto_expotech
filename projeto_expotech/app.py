@@ -189,7 +189,6 @@ def tela_produtos():
 def tela_carrinho():
     st.title("Carrinho")
 
-    # Verificar se existe carrinho na sessão
     if "carrinho" not in st.session_state or len(st.session_state.carrinho) == 0:
         st.warning("Seu carrinho está vazio.")
         return
@@ -208,7 +207,6 @@ def tela_carrinho():
 
             st.write(f"**{nome}** — R$ {preco:.2f}")
 
-            # Escolher quantidade
             nova_qtd = st.number_input(
                 f"Quantidade de {nome}",
                 min_value=1,
@@ -217,22 +215,18 @@ def tela_carrinho():
                 key=f"qtd_carrinho_{idx}"
             )
 
-            # Atualiza quantidade
             st.session_state.carrinho[idx]["quantidade"] = nova_qtd
 
-            # Botão de remover item
-            if st.button(f"Remover {nome}", key=f"remover_{idx}"):
+            if st.button(f"Remover", key=f"remover_{idx}"):
                 itens_remover.append(idx)
 
         total += preco * nova_qtd
 
-    # Remove itens marcados
     for idx in sorted(itens_remover, reverse=True):
         st.session_state.carrinho.pop(idx)
 
     st.subheader(f"Total: R$ {total:.2f}")
 
-    # Finalizar pedido
     if st.button("Finalizar Pedido"):
         from backend import criar_pedido, adicionar_item_pedido, atualizar_estoque
 
@@ -248,11 +242,28 @@ def tela_carrinho():
             )
             atualizar_estoque(item["id_produto"], item["quantidade"])
 
-        st.success("Pedido finalizado com sucesso!")
-
-        # Limpar carrinho
         st.session_state.carrinho = []
+        st.session_state.page = "pedido_finalizado"
         st.rerun()
+
+def tela_pedido_finalizado():
+    st.title("Pedido Finalizado!")
+
+    st.success("Seu pedido foi registrado com sucesso.")
+
+    st.write("O que deseja fazer agora?")
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        if st.button("Continuar comprando"):
+            st.session_state.page = "produtos_cliente"
+            st.rerun()
+
+    with col2:
+        if st.button("Sair da conta"):
+            st.session_state.clear()
+            st.rerun()
 
 def tela_pedidos():
     st.title("Pedidos")
@@ -316,7 +327,7 @@ def tela_cadastro_produto():
 
 def tela_produtos_cliente():
     from backend import listar_produtos
-    st.title("Produtos Disponíveis")
+    st.title("Produtos")
 
     busca = st.text_input("Pesquisar por nome ou categoria:")
 
@@ -345,18 +356,18 @@ def tela_produtos_cliente():
             st.write(f"Preço: R$ {valor:.2f}")
             st.write(f"Disponível: {qtd}")
 
-            if qtd <= 0:
+            if qtd == 0:
                 st.warning("Produto esgotado!")
                 continue
 
             qtd_escolhida = st.number_input(
-                f"Quantidade ({nome})",
+                f"Adicionar quantidade:",
                 min_value=1,
                 max_value=qtd,
                 key=f"qtd_{id_produto}"
             )
 
-            if st.button(f"Adicionar ao carrinho ({nome})", key=f"btn_{id_produto}"):
+            if st.button(f"Adicionar ao carrinho", key=f"btn_{id_produto}"):
                 if "carrinho" not in st.session_state:
                     st.session_state.carrinho = []
 
@@ -381,7 +392,7 @@ def tela_produtos_funcionario():
     mapa_categorias = {cat[0]: cat[1] for cat in categorias}
 
     for prod in produtos:
-        id_prod, nome, desc, qtd, valor, categoria = prod
+        id_prod, nome, desc, valor, qtd, categoria = prod
 
         with st.container(border=True):
             st.subheader(nome)
@@ -664,6 +675,25 @@ with st.sidebar:
 
     Faça login para continuar!
         """)
+    
+    if st.session_state.page in ["login_cliente"]:
+        st.write("### Loja de Materiais Darcan")
+        st.write("- Aproveite nossa variedade de produtos!")
+        st.write("- Faça login ou cria uma conta agora mesmo!")
+        st.write("---")
+
+    if st.session_state.page in ["login_funcionario"]:
+        st.write("### Loja de Materiais Darcan")
+        st.write("#### Sistema de Gestão de Estoque")
+        st.write("- Gerencie o estoque e pedidos da loja.")
+        st.write("- Faça login para continuar.")
+        st.write("---")
+
+    if st.session_state.page in ["cadastrar_cliente_publico"]:
+        st.write("### Cadastro de Cliente")
+        st.write("- Cria sua conta para aproveitar nossos produtos!")
+        st.write("- Preencha o formulário ao lado.")
+        st.write("---")
 
     # Cliente logado
     if st.session_state.get("id_cliente"):
@@ -686,7 +716,6 @@ with st.sidebar:
             st.session_state.page = "produtos_cliente"
             st.rerun()
         
-
         if st.button("Sair"):
             st.session_state.clear()
             st.rerun()
@@ -762,3 +791,5 @@ elif st.session_state.page == "editar_produto":
     tela_editar_produto()
 elif st.session_state.page == "editar_funcionario":
     tela_editar_funcionario()
+elif st.session_state.page == "pedido_finalizado":
+    tela_pedido_finalizado()

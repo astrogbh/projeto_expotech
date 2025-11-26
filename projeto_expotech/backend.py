@@ -341,7 +341,7 @@ def editar_produto(id_produto, nome, descricao, quantidade, valor, minimo, id_ca
     conexao = conectar()
     cursor = conexao.cursor()
 
-    cursor.execute("DELETE FROM tbl_estoque_produtos WHERE id_produto = %s", (id_produto,))
+    cursor.execute(sql, (nome, descricao, quantidade, valor, minimo, id_categoria, id_produto))
     conexao.commit()
     conexao.close()
 
@@ -394,9 +394,9 @@ def editar_funcionario(id_func, nome, usuario, senha, acesso):
     sql = """
     UPDATE tbl_funcionarios
     SET nome_funcionario=%s,
-        usuario_funcionario=%s,
+        login_funcionario=%s,
         senha_funcionario=%s,
-        acesso=%s
+        acesso_gestor=%s
     WHERE id_funcionario=%s
     """
 
