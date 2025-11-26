@@ -99,7 +99,7 @@ CREATE TABLE `tbl_estoque_produtos` (
 
 LOCK TABLES `tbl_estoque_produtos` WRITE;
 /*!40000 ALTER TABLE `tbl_estoque_produtos` DISABLE KEYS */;
-INSERT INTO `tbl_estoque_produtos` VALUES (1,'Martelo Darcan','Martelo de aço com cabo emborrachado',52,29.90,20,1,1),(2,'Chave de Fenda Darcan','Chave média com ponta imantada',101,9.50,40,1,2),(3,'Interruptor Simples Darcan','Interruptor 10A branco',228,4.80,90,2,3),(4,'Tinta Acrílica Darcan 18L','Tinta branca para parede',0,159.99,10,4,4),(5,'Cimento Darcan II 50kg','Saco de cimento',112,42.00,50,5,5),(6,'Torneira de Metal','Torneira para pia cozinha',63,35.00,30,3,6),(7,'Porcelanato 60x60','Piso claro brilhante',28,69.90,40,10,7),(8,'Rolo de Pintura Darcan','Rolo de lã para tinta acrílica',18,18.90,20,4,8),(9,'Luminária LED Darcan','Luminária de sobrepor 18W',40,45.00,20,8,9),(10,'Caixa d’água Darcan 500L','Caixa em polietileno',7,320.00,3,3,10);
+INSERT INTO `tbl_estoque_produtos` VALUES (1,'Martelo Darcan','Martelo de aço com cabo emborrachado',50,29.90,20,1,1),(2,'Chave de Fenda Darcan','Chave média com ponta imantada',101,9.50,40,1,2),(3,'Interruptor Simples Darcan','Interruptor 10A branco',228,4.80,90,2,3),(4,'Tinta Acrílica Darcan 18L','Tinta branca para parede',0,159.99,10,4,4),(5,'Cimento Darcan II 50kg','Saco de cimento',112,42.00,50,5,5),(6,'Torneira de Metal','Torneira para pia cozinha',63,35.00,30,3,6),(7,'Porcelanato 60x60','Piso claro brilhante',27,69.90,40,10,7),(8,'Rolo de Pintura Darcan','Rolo de lã para tinta acrílica',18,18.90,20,4,8),(9,'Luminária LED Darcan','Luminária de sobrepor 18W',40,45.00,20,8,9),(10,'Caixa d’água Darcan 500L','Caixa em polietileno',7,320.00,3,3,10);
 /*!40000 ALTER TABLE `tbl_estoque_produtos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -149,7 +149,7 @@ CREATE TABLE `tbl_itens_pedido_estoque_pedido` (
   KEY `FK_tbl_itens_pedido_estoque_pedido_3` (`fk_tbl_pedidos_id_pedido`),
   CONSTRAINT `FK_tbl_itens_pedido_estoque_pedido_2` FOREIGN KEY (`fk_tbl_estoque_produtos_id_produto`) REFERENCES `tbl_estoque_produtos` (`id_produto`),
   CONSTRAINT `FK_tbl_itens_pedido_estoque_pedido_3` FOREIGN KEY (`fk_tbl_pedidos_id_pedido`) REFERENCES `tbl_pedidos` (`id_pedido`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -158,7 +158,7 @@ CREATE TABLE `tbl_itens_pedido_estoque_pedido` (
 
 LOCK TABLES `tbl_itens_pedido_estoque_pedido` WRITE;
 /*!40000 ALTER TABLE `tbl_itens_pedido_estoque_pedido` DISABLE KEYS */;
-INSERT INTO `tbl_itens_pedido_estoque_pedido` VALUES (1,2,42.00,5,1),(2,2,4.80,3,2),(3,1,29.90,1,3),(4,1,9.50,2,3),(5,2,35.00,6,4),(6,1,45.00,9,4),(7,2,69.90,7,5),(8,1,159.99,4,6),(9,2,18.90,8,7),(10,2,45.00,9,8),(11,1,18.90,8,9),(12,2,320.00,10,10),(13,1,53.00,1,11),(14,1,102.00,2,11),(15,1,8.00,10,11),(16,1,41.00,9,11);
+INSERT INTO `tbl_itens_pedido_estoque_pedido` VALUES (1,2,42.00,5,1),(2,2,4.80,3,2),(3,1,29.90,1,3),(4,1,9.50,2,3),(5,2,35.00,6,4),(6,1,45.00,9,4),(7,2,69.90,7,5),(8,1,159.99,4,6),(9,2,18.90,8,7),(10,2,45.00,9,8),(11,1,18.90,8,9),(12,2,320.00,10,10),(13,1,53.00,1,11),(14,1,102.00,2,11),(15,1,8.00,10,11),(16,1,41.00,9,11),(17,1,29.90,1,12),(18,1,69.90,7,12),(19,1,29.90,1,13);
 /*!40000 ALTER TABLE `tbl_itens_pedido_estoque_pedido` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -177,7 +177,7 @@ CREATE TABLE `tbl_pedidos` (
   PRIMARY KEY (`id_pedido`),
   KEY `FK_tbl_pedidos_2` (`fk_tbl_clientes_id_cliente`),
   CONSTRAINT `FK_tbl_pedidos_2` FOREIGN KEY (`fk_tbl_clientes_id_cliente`) REFERENCES `tbl_clientes` (`id_cliente`) ON DELETE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -186,7 +186,7 @@ CREATE TABLE `tbl_pedidos` (
 
 LOCK TABLES `tbl_pedidos` WRITE;
 /*!40000 ALTER TABLE `tbl_pedidos` DISABLE KEYS */;
-INSERT INTO `tbl_pedidos` VALUES (1,'2025-05-01',84.00,1),(2,'2025-05-02',9.60,2),(3,'2025-05-03',39.40,3),(4,'2025-05-04',115.00,4),(5,'2025-05-05',139.80,5),(6,'2025-05-06',159.99,6),(7,'2025-05-07',37.80,7),(8,'2025-05-08',90.00,8),(9,'2025-05-09',18.90,9),(10,'2025-05-10',640.00,10),(11,'2025-11-24',204.00,11);
+INSERT INTO `tbl_pedidos` VALUES (1,'2025-05-01',84.00,1),(2,'2025-05-02',9.60,2),(3,'2025-05-03',39.40,3),(4,'2025-05-04',115.00,4),(5,'2025-05-05',139.80,5),(6,'2025-05-06',159.99,6),(7,'2025-05-07',37.80,7),(8,'2025-05-08',90.00,8),(9,'2025-05-09',18.90,9),(10,'2025-05-10',640.00,10),(11,'2025-11-24',204.00,11),(12,'2025-11-25',99.80,11),(13,'2025-11-25',29.90,11);
 /*!40000 ALTER TABLE `tbl_pedidos` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -199,4 +199,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-11-25 16:15:46
+-- Dump completed on 2025-11-26 15:08:52
